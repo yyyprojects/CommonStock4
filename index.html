@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ultimate Infographic Guide to Common Stock</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Brilliant Blues -->
+    <!-- Application Structure Plan: A top-to-bottom narrative infographic designed for a beginner audience. The structure follows a logical learning path: 1) Hook/Definition, 2) Core Rights of Ownership, 3) Key Comparison (Common vs. Preferred), 4) The Fundamental Trade-off (Risk vs. Reward), 5) The Company's Perspective (Why Issue Stock), 6) A Practical Guide (How to Invest). This linear, story-driven approach is ideal for an infographic format, guiding the user through complex information in a digestible sequence. -->
+    <!-- Visualization & Content Choices:
+        - Report Info: Core Shareholder Rights -> Goal: Inform -> Viz: Icon-based cards (HTML/CSS) -> Justification: Breaks down dense rights into visually distinct, easy-to-scan sections. NO SVG.
+        - Report Info: Common vs. Preferred Stock -> Goal: Compare -> Viz: Vertical Bar Chart (Chart.js) -> Justification: A bar chart is the clearest way to show a ranked comparison, making the abstract concept of liquidation priority immediately understandable. NO SVG.
+        - Report Info: Risk vs. Reward -> Goal: Relationships/Change -> Viz: Line Chart (Chart.js) -> Justification: A line chart is the standard and most effective way to show a relationship or trend over time, perfectly illustrating volatility vs. long-term growth. NO SVG.
+        - Report Info: Why Companies Issue Stock -> Goal: Inform/Compare -> Viz: Donut Chart (Chart.js) -> Justification: A donut chart is ideal for showing the composition of a whole, clearly visualizing how equity fits into a company's total capital structure. NO SVG.
+        - Report Info: How to Invest -> Goal: Organize -> Viz: Numbered Flowchart (HTML/CSS) -> Justification: A visual flowchart is more engaging and easier to follow for a step-by-step process than a simple text list. NO SVG, NO MERMAID JS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #BFD7EA; /* Light Blue from Palette */
+            color: #0B3954; /* Dark Blue from Palette */
+        }
+        .text-accent-red { color: #FF5A5F; }
+        .bg-accent-red { background-color: #FF5A5F; }
+        .bg-accent-red-dark { background-color: #C81D25; }
+        .bg-brand-dark-blue { background-color: #0B3954; }
+        .bg-brand-teal { background-color: #087E8B; }
+        .text-brand-teal { color: #087E8B; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container { height: 350px; }
+        }
+        .flowchart-step {
+            position: relative;
+            padding-left: 50px;
+        }
+        .flowchart-step::before {
+            content: '';
+            position: absolute;
+            left: 18px;
+            top: 40px;
+            bottom: -20px;
+            width: 4px;
+            background-color: #087E8B;
+        }
+        .flowchart-step:last-child::before {
+            display: none;
+        }
+        .flowchart-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #087E8B;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 sm:p-8 max-w-5xl">
+
+        <header class="text-center my-12">
+            <h1 class="text-4xl md:text-6xl font-bold text-brand-dark-blue">COMMON STOCK</h1>
+            <p class="text-xl md:text-2xl mt-4 font-light">Your Ultimate Guide to Owning a Piece of a Company</p>
+        </header>
+
+        <section class="my-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-brand-dark-blue">What Does Ownership Actually Mean?</h2>
+                <p class="mt-2 max-w-2xl mx-auto">When you buy a common stock, you're not just getting a digital receipt. You're becoming a part-owner with specific rights that give you a voice and a stake in the company's future.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="text-5xl mb-4">🗳️</div>
+                    <h3 class="text-xl font-bold mb-2">Voting Power</h3>
+                    <p class="text-sm">Elect the board of directors and vote on major company decisions like mergers. Your shares are your voice.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="text-5xl mb-4">💰</div>
+                    <h3 class="text-xl font-bold mb-2">Dividend Rights</h3>
+                    <p class="text-sm">Receive a share of the company's profits, if the board decides to pay them out. It's your piece of the earnings.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="text-5xl mb-4">🏛️</div>
+                    <h3 class="text-xl font-bold mb-2">Claim on Assets</h3>
+                    <p class="text-sm">If the company liquidates, you get a piece of what's left after all debts are paid. This is the high-risk, high-reward part.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-20 bg-brand-dark-blue text-white rounded-xl p-8 md:p-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="text-center lg:text-left">
+                    <h2 class="text-3xl font-bold">Common vs. Preferred Stock</h2>
+                    <p class="mt-4 text-blue-200">Companies issue two main types of stock. While both represent ownership, they offer very different deals to investors. The biggest difference? Who gets paid first if the company goes under.</p>
+                </div>
+                <div>
+                    <div class="chart-container bg-white/10 rounded-lg p-4">
+                        <canvas id="liquidationChart"></canvas>
+                    </div>
+                    <p class="text-xs text-center mt-2 text-blue-300">This chart shows the "liquidation priority"—the pecking order for getting paid in a bankruptcy. Common stockholders are last, which is why their investment carries more risk and more potential reward.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-brand-dark-blue">The Great Trade-Off: Risk vs. Reward</h2>
+                <p class="mt-2 max-w-2xl mx-auto">Common stock is famous for its potential growth, but that comes with volatility. The stock market can be a rollercoaster in the short term, but historically, it has rewarded long-term investors.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-xl p-8">
+                <div class="chart-container h-80 max-h-80">
+                    <canvas id="riskRewardChart"></canvas>
+                </div>
+                <p class="text-sm text-center mt-4 text-gray-600">This illustrates how an investment can experience sharp ups and downs (volatility) day-to-day, but can trend upwards over many years (capital appreciation). The key is a long-term perspective.</p>
+            </div>
+        </section>
+
+        <section class="my-20 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-center mb-4">Why Do Companies Issue Stock?</h3>
+                <p class="text-sm text-center mb-6">It's all about raising money to grow without taking on debt. By selling small pieces of ownership, companies can fund new projects, hire more people, and expand their business.</p>
+                <div class="chart-container h-64 max-h-64">
+                    <canvas id="capitalStructureChart"></canvas>
+                </div>
+                <p class="text-xs text-center mt-4 text-gray-500">A company's funding is a mix of debt (loans) and equity (stock). Issuing stock increases the equity portion, strengthening the company's financial foundation.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-center mb-4">Why Do Investors Buy Stock?</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <span class="text-accent-red font-bold text-2xl mr-4">📈</span>
+                        <div>
+                            <h4 class="font-semibold">Capital Appreciation</h4>
+                            <p class="text-sm">The hope that the shares you buy for $100 today will be worth $200 tomorrow. This is the primary driver of wealth creation.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-accent-red font-bold text-2xl mr-4">💵</span>
+                        <div>
+                            <h4 class="font-semibold">Dividend Income</h4>
+                            <p class="text-sm">A cash payment from the company's profits, providing a regular income stream from your investment.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-accent-red font-bold text-2xl mr-4">💧</span>
+                        <div>
+                            <h4 class="font-semibold">Liquidity</h4>
+                            <p class="text-sm">The ability to easily sell your shares for cash on a stock exchange, giving you financial flexibility.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="my-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-brand-dark-blue">Your Path to Becoming an Investor</h2>
+                <p class="mt-2 max-w-2xl mx-auto">Getting started is easier than you think. It's a journey that involves planning, learning, and taking measured steps. Here's a simplified roadmap.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-xl p-8 md:p-12">
+                <div class="flowchart-step pb-8">
+                    <div class="flowchart-number">1</div>
+                    <h3 class="font-bold text-xl text-brand-teal">Define Your Goals</h3>
+                    <p>What are you saving for? Retirement? A house? Knowing your goal and timeline is the most important first step.</p>
+                </div>
+                <div class="flowchart-step pb-8">
+                    <div class="flowchart-number">2</div>
+                    <h3 class="font-bold text-xl text-brand-teal">Open a Brokerage Account</h3>
+                    <p>This is your gateway to the stock market. Many online brokers offer commission-free trading and have no minimum balance.</p>
+                </div>
+                <div class="flowchart-step pb-8">
+                    <div class="flowchart-number">3</div>
+                    <h3 class="font-bold text-xl text-brand-teal">Fund Your Account</h3>
+                    <p>Start with an amount you're comfortable with. You can invest with as little as $100. Consistency is more important than a large starting sum.</p>
+                </div>
+                <div class="flowchart-step">
+                    <div class="flowchart-number">4</div>
+                    <h3 class="font-bold text-xl text-brand-teal">Pick Your Investments</h3>
+                    <p>For beginners, a great starting point is a diversified ETF that tracks a major index like the S&P 500. This gives you "instant diversification" and reduces risk.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center mt-16 py-8 border-t-2 border-brand-dark-blue/20">
+            <p class="font-bold text-brand-dark-blue">Disclaimer</p>
+            <p class="text-sm max-w-lg mx-auto mt-2">This infographic is for educational purposes only and is not financial advice. All investing involves risk. Consult with a qualified professional before making any investment decisions.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const brilliantBlues = {
+                darkBlue: '#0B3954',
+                teal: '#087E8B',
+                lightBlue: '#BFD7EA',
+                red: '#FF5A5F',
+                darkRed: '#C81D25'
+            };
+
+            const poppinsFont = "'Poppins', sans-serif";
+
+            Chart.defaults.font.family = poppinsFont;
+            Chart.defaults.color = brilliantBlues.darkBlue;
+
+            const tooltipConfig = {
+                plugins: {
+                    tooltip: {
+                        backgroundColor: brilliantBlues.darkBlue,
+                        titleFont: { size: 16, weight: 'bold' },
+                        bodyFont: { size: 14 },
+                        padding: 12,
+                        cornerRadius: 4,
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                return Array.isArray(label) ? label.join(' ') : label;
+                            }
+                        }
+                    }
+                }
+            };
+
+            function wrapLabel(str, max_width) {
+                const words = str.split(' ');
+                let lines = [];
+                let current_line = words[0];
+
+                for (let i = 1; i < words.length; i++) {
+                    if ((current_line + " " + words[i]).length > max_width) {
+                        lines.push(current_line);
+                        current_line = words[i];
+                    } else {
+                        current_line += " " + words[i];
+                    }
+                }
+                lines.push(current_line);
+                return lines;
+            }
+
+            if (document.getElementById('liquidationChart')) {
+                const ctx = document.getElementById('liquidationChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Creditors & Bondholders', 'Preferred Stockholders', 'Common Stockholders'],
+                        datasets: [{
+                            label: 'Priority',
+                            data: [3, 2, 1],
+                            backgroundColor: [brilliantBlues.lightBlue, brilliantBlues.teal, brilliantBlues.red],
+                            borderColor: brilliantBlues.darkBlue,
+                            borderWidth: 2,
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        ...tooltipConfig,
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        plugins: {
+                            ...tooltipConfig.plugins,
+                            legend: { display: false },
+                            title: { display: true, text: 'Who Gets Paid First in Bankruptcy?', color: '#FFFFFF', font: { size: 16 } }
+                        },
+                        scales: {
+                            x: { display: false, grid: { display: false } },
+                            y: { ticks: { color: '#FFFFFF', font: { size: 14 } }, grid: { display: false } }
+                        }
+                    }
+                });
+            }
+
+            if (document.getElementById('riskRewardChart')) {
+                const ctx = document.getElementById('riskRewardChart').getContext('2d');
+                const years = Array.from({length: 21}, (_, i) => `Year ${i}`);
+                const dataPoints = years.reduce((acc, _, i) => {
+                    const last = acc.length ? acc[acc.length - 1] : 100;
+                    const growth = 5;
+                    const volatility = (Math.random() - 0.45) * 20;
+                    acc.push(last + growth + volatility);
+                    return acc;
+                }, []);
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: years,
+                        datasets: [{
+                            label: 'Investment Value',
+                            data: dataPoints,
+                            borderColor: brilliantBlues.red,
+                            backgroundColor: 'rgba(255, 90, 95, 0.2)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        ...tooltipConfig,
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            ...tooltipConfig.plugins,
+                            legend: { display: false },
+                            title: { display: true, text: 'Hypothetical Long-Term Growth', font: { size: 18 } }
+                        },
+                        scales: {
+                            y: { ticks: { callback: (value) => '$' + value.toFixed(0) } }
+                        }
+                    }
+                });
+            }
+
+            if (document.getElementById('capitalStructureChart')) {
+                const ctx = document.getElementById('capitalStructureChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Common Equity', 'Debt (Loans, Bonds)', 'Preferred Equity'],
+                        datasets: [{
+                            data: [55, 35, 10],
+                            backgroundColor: [brilliantBlues.teal, brilliantBlues.darkBlue, brilliantBlues.lightBlue],
+                            borderColor: '#FFFFFF',
+                            borderWidth: 4,
+                            hoverOffset: 8
+                        }]
+                    },
+                    options: {
+                        ...tooltipConfig,
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '60%',
+                        plugins: {
+                            ...tooltipConfig.plugins,
+                            legend: { position: 'bottom', labels: { padding: 20 } },
+                            title: { display: true, text: 'Example Company Funding Mix', font: { size: 16 } }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
